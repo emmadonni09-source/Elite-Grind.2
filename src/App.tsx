@@ -49,7 +49,7 @@ const Navbar = ({ onToggleFilters, searchQuery, setSearchQuery }: { onToggleFilt
 
         <div className={`flex flex-col items-center flex-1 ${isSearchOpen ? 'hidden md:flex' : 'flex'}`}>
           <h1 className="text-2xl font-black tracking-tighter italic uppercase leading-none">
-            Elite<span className="text-muted">Grind</span>
+            Elite<span className="text-muted">Grind Sports</span> 
           </h1>
         </div>
 
