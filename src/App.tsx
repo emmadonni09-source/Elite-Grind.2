@@ -112,6 +112,9 @@ function ProductCard({ product, onClick }: ProductCardProps) {
 };
 
 const ProductModal = ({ product, onClose }: { product: Product; onClose: () => void }) => {
+  const [activeImage, setActiveImage] = useState(product.image);
+  const images = product.images || [product.image];
+
   return (
     <motion.div 
       initial={{ opacity: 0 }}
@@ -133,13 +136,29 @@ const ProductModal = ({ product, onClose }: { product: Product; onClose: () => v
           <X className="w-5 h-5 group-hover:rotate-90 transition-transform duration-300" />
         </button>
 
-        <div className="w-full md:w-1/2 bg-zinc-900 aspect-square md:aspect-auto overflow-hidden">
-          <img 
-            src={product.image} 
-            alt={product.name}
-            className="w-full h-full object-cover"
-            referrerPolicy="no-referrer"
-          />
+        <div className="w-full md:w-1/2 bg-zinc-900 relative flex flex-col aspect-square md:aspect-auto">
+          <div className="flex-grow overflow-hidden h-full">
+            <img 
+              src={activeImage} 
+              alt={product.name}
+              className="w-full h-full object-cover"
+              referrerPolicy="no-referrer"
+            />
+          </div>
+          
+          {images.length > 1 && (
+            <div className="absolute bottom-6 left-0 right-0 flex justify-center gap-3 px-6 overflow-x-auto custom-scrollbar pb-2">
+              {images.map((img, idx) => (
+                <button 
+                  key={idx}
+                  onClick={() => setActiveImage(img)}
+                  className={`flex-shrink-0 w-16 h-16 border-2 rounded-xl overflow-hidden transition-all shadow-lg ${activeImage === img ? 'border-fg scale-110' : 'border-white/10 opacity-60 hover:opacity-100'}`}
+                >
+                  <img src={img} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                </button>
+              ))}
+            </div>
+          )}
         </div>
 
         <div className="w-full md:w-1/2 p-6 md:p-10 flex flex-col justify-between overflow-y-auto custom-scrollbar">
